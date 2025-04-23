@@ -24,7 +24,7 @@ on:
 env:
   # TODO We can probobly support more platforms
   # PLATFORMS: ${{ inputs.platforms || 'linux/amd64,linux/arm64,linux/386' }}
-  PLATFORMS: ${{ inputs.platforms || 'linux/amd64' }}
+  PLATFORMS: ${{ inputs.platforms || 'linux/amd64,linux/arm64' }}
 
 jobs:
   publish-image:
