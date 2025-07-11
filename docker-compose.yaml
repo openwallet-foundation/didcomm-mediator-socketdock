@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  socket-gateway:
+    build: .
+    environment:
+      SANIC_REQUEST_TIMEOUT: 700
+      SANIC_RESPONSE_TIMEOUT: 700 
+    ports:
+      - "8765:8765"
+    volumes:
+      - ./postdock:/usr/src/app/postdock:z
+      - ./logging/jsonLog.py:/usr/local/lib/python3.10/jsonLog.py
+      - ./logging/config.yml:/usr/src/app/postdock/config.yml
+    command: >
+      --bindip 0.0.0.0
+      --backend http
+      --forward-uri 0.0.0.0
+      --endpoint http://localhost:8765
+      --log-level DEBUG
+      --log-config "/usr/src/app/postdock/config.yml"
