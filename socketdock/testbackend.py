@@ -25,7 +25,7 @@ class TestBackend(Backend):
 
         This test backend doesn't care, but can be useful to clean up state.
         """
-        LOGGER.debug("Connected to test backend: %s", connection_id)
+        LOGGER.debug(f"Connected to test backend: {connection_id}")
 
     async def inbound_socket_message(
         self,
@@ -33,18 +33,18 @@ class TestBackend(Backend):
         message: Union[str, bytes],
     ):
         """Receive socket message."""
-        LOGGER.debug("Recieved message [%s]: %s", connection_id, message)
+        LOGGER.debug(f"Recieved message [{connection_id}]: {message}")
         send_uri = f"{self.base_uri}/socket/{connection_id}/send"
         async with aiohttp.ClientSession() as session:
             async with session.post(send_uri, data="Hello yourself") as resp:
                 if not resp.ok:
                     raise Exception(f"Failed to post to: {send_uri}")
                 response = await resp.text()
-                LOGGER.debug("Response: %s", response)
+                LOGGER.debug(f"Response: {response}")
 
     async def socket_disconnected(self, connection_id: str):
         """Socket disconnected.
 
         This test backend doesn't care, but can be useful to clean up state.
         """
-        LOGGER.debug("Disconnected from test backend: %s", connection_id)
+        LOGGER.debug(f"Disconnected from test backend: {connection_id}")

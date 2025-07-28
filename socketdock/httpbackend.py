@@ -58,13 +58,13 @@ class HTTPBackend(Backend):
 
         if self._connect_uri:
             async with aiohttp.ClientSession() as session:
-                LOGGER.info("Posting message %s to %s", http_body, self._connect_uri)
+                LOGGER.info(f"Posting message {http_body} to { self._connect_uri}")
                 async with session.post(self._connect_uri, json=http_body) as resp:
                     response = await resp.text()
                     if resp.status != 200:
-                        LOGGER.error("Error posting message: %s", response)
+                        LOGGER.error(f"Error posting message: {response}")
                     else:
-                        LOGGER.debug("Response: %s", response)
+                        LOGGER.debug(f"Response: {response}")
 
     async def inbound_socket_message(
         self,
@@ -81,25 +81,25 @@ class HTTPBackend(Backend):
         }
 
         async with aiohttp.ClientSession() as session:
-            LOGGER.info("Posting message %s to %s", http_body, self._message_uri)
+            LOGGER.info(f"Posting message {http_body} to {self._message_uri}")
             async with session.post(self._message_uri, json=http_body) as resp:
                 response = await resp.text()
                 if resp.status != 200:
-                    LOGGER.error("Error posting message: %s", response)
+                    LOGGER.error(f"Error posting message: {response}")
                 else:
-                    LOGGER.debug("Response: %s", response)
+                    LOGGER.debug(f"Response: {response}")
 
     async def socket_disconnected(self, connection_id: str):
         """Handle socket disconnected."""
         async with aiohttp.ClientSession() as session:
             LOGGER.info(
-                "Notifying of disconnect: %s %s", self._disconnect_uri, connection_id
+                f"Notifying of disconnect: {self._disconnect_uri} {connection_id}"
             )
             async with session.post(
                 self._disconnect_uri, json={"connection_id": connection_id}
             ) as resp:
                 response = await resp.text()
                 if resp.status != 200:
-                    LOGGER.error("Error posting to disconnect uri: %s", response)
+                    LOGGER.error(f"Error posting to disconnect uri: {response}")
                 else:
-                    LOGGER.debug("Response: %s", response)
+                    LOGGER.debug(f"Response: {response}")

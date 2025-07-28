@@ -43,8 +43,8 @@ async def status_handler(request: Request):
 @api.post("/socket/<connectionid>/send")
 async def socket_send(request: Request, connectionid: str):
     """Send a message to a connected socket."""
-    LOGGER.info("Inbound message for %s", connectionid)
-    LOGGER.debug("Existing connections: %s", active_connections.keys())
+    LOGGER.info(f"Inbound message for {connectionid}")
+    LOGGER.debug(f"Existing connections: {active_connections.keys()}")
 
     if connectionid not in active_connections:
         return text("FAIL", status=500)
@@ -60,8 +60,8 @@ async def socket_send(request: Request, connectionid: str):
 @api.post("/socket/<connectionid>/disconnect")
 async def socket_disconnect(request: Request, connectionid: str):
     """Disconnect a socket."""
-    LOGGER.info("Disconnect %s", connectionid)
-    LOGGER.debug("Existing connections: %s", active_connections.keys())
+    LOGGER.info(f"Disconnect {connectionid}")
+    LOGGER.debug(f"Existing connections: {active_connections.keys()}")
 
     if connectionid not in active_connections:
         return text("FAIL", status=500)
@@ -83,9 +83,9 @@ async def socket_handler(request: Request, websocket: Websocket):
         socket_id = websocket.ws_proto.id.hex
         active_connections[socket_id] = websocket
         lifetime_connections += 1
-        LOGGER.debug("Existing connections: %s", active_connections.keys())
-        LOGGER.debug("Added connection: %s", socket_id)
-        LOGGER.debug("Request headers: %s", dict(request.headers.items()))
+        LOGGER.debug(f"Existing connections: {active_connections.keys()}")
+        LOGGER.debug(f"Added connection: {socket_id}")
+        LOGGER.debug(f"Request headers: {dict(request.headers.items())}")
 
         await backend.socket_connected(
             connection_id=socket_id,
@@ -105,5 +105,5 @@ async def socket_handler(request: Request, websocket: Websocket):
         # unregister user
         if socket_id:
             del active_connections[socket_id]
-            LOGGER.info("Removed connection: %s", socket_id)
+            LOGGER.info(f"Removed connection: {socket_id}")
             await backend.socket_disconnected(socket_id)
