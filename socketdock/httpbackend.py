@@ -58,7 +58,7 @@ class HTTPBackend(Backend):
 
         if self._connect_uri:
             async with aiohttp.ClientSession() as session:
-                LOGGER.info(f"Posting message {http_body} to { self._connect_uri}")
+                LOGGER.info(f"Posting message {http_body} to {self._connect_uri}")
                 async with session.post(self._connect_uri, json=http_body) as resp:
                     response = await resp.text()
                     if resp.status != 200:

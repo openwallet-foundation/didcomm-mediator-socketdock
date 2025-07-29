@@ -12,6 +12,7 @@ import yaml
 
 LOGGER = logging.getLogger(__name__)
 
+
 def load_resource(path: str, encoding: Optional[str] = None):
     """Open a resource file located in a python package or the local filesystem.
 

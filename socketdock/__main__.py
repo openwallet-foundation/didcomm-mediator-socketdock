@@ -1,6 +1,5 @@
 """Run the SocketDock server."""
 
-import logging
 import argparse
 from sanic import Sanic
 
@@ -35,7 +34,7 @@ def config() -> argparse.Namespace:
     parser.add_argument("--connect-uri")
     parser.add_argument(
         "--log-level",
-        dest="log_level",    
+        dest="log_level",
         default="INFO",
         choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
     )
@@ -55,7 +54,6 @@ def config() -> argparse.Namespace:
         default=None,
         help="Specifies a custom logging configuration file",
     )
-
 
     return parser.parse_args()
 
