@@ -12,12 +12,15 @@ def configure_logging(args):
     # Set up logging
     log_config = args.log_config
     log_level = args.log_level
-    log_file = args.log_file
-    LoggingConfigurator.configure(
-        log_config_path=log_config,
-        log_level=log_level,
-        log_file=log_file,
-    )
+
+    try:
+        LoggingConfigurator.configure(
+            log_config_path=log_config,
+            log_level=log_level,
+        )
+
+    except Exception as e:
+        raise Exception("Logger configuration failed: ", e)
 
 
 def config() -> argparse.Namespace:
@@ -39,19 +42,9 @@ def config() -> argparse.Namespace:
         choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
     )
     parser.add_argument(
-        "--log-file",
-        dest="log_file",
-        default=None,
-        help=(
-            "--log-file enables writing of logs to file, if a value is "
-            "provided then it uses that as log file location, otherwise "
-            "the default location in log config file is used."
-        ),
-    )
-    parser.add_argument(
         "--log-config",
         dest="log_config",
-        default=None,
+        default="/usr/src/app/socketdock/config/logging-config.yml",
         help="Specifies a custom logging configuration file",
     )
 
