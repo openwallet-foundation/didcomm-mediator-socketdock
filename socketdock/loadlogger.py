@@ -54,6 +54,7 @@ class LoggingConfigurator:
         cls, log_config_path: Optional[str] = None, log_level: Optional[str] = None
     ):
         """Configure logger.
+        
         :param logging_config_path: str: (Default value = None) Optional path to
             custom logging config
 

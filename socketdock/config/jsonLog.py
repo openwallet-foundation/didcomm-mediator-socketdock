@@ -1,4 +1,4 @@
-"""Custom json logging"""
+"""Custom json logging."""
 
 # Python3 logging custom formatter.
 # For more information, please visit: https://docs.python.org/3/library/logging.html
@@ -12,11 +12,10 @@ hostname = socket.gethostname()
 
 
 class JsonFormatter(logging.Formatter):
-    """JsonFormatter Class"""
+    """JsonFormatter Class."""
 
     def format(self, record):
-        """format class. Used to do custom json formatting"""
-
+        """Format class. Used to do custom json formatting."""
         # Interpolates record message properly
         record.msg = super().format(record)
 
