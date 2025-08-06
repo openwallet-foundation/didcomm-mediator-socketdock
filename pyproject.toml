@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "socketdock"
-version = "0.1.0a0"
+version = "0.1.1a0"
 description = "Websocket relay service for use with clustered mediators"
 authors = [
 	"Sam Curren <telegramsam@gmail.com>",
