@@ -19,6 +19,5 @@ COPY --from=base /usr/src/app/.venv /usr/src/app/.venv
 ENV PATH="/usr/src/app/.venv/bin:$PATH"
 
 COPY socketdock socketdock
-COPY socketdock/config/jsonLog.py /usr/local/lib/python3.9/jsonLog.py
 
 ENTRYPOINT ["python",  "-m", "socketdock" ]
