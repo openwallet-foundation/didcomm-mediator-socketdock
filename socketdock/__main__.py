@@ -1,10 +1,26 @@
 """Run the SocketDock server."""
 
-import logging
 import argparse
 from sanic import Sanic
 
 from .api import api, backend_var
+from .loadlogger import LoggingConfigurator
+
+
+def configure_logging(args):
+    """Perform common app configuration."""
+    # Set up logging
+    log_config = args.log_config
+    log_level = args.log_level
+
+    try:
+        LoggingConfigurator.configure(
+            log_config_path=log_config,
+            log_level=log_level,
+        )
+
+    except Exception as e:
+        raise Exception("Logger configuration failed: ", e)
 
 
 def config() -> argparse.Namespace:
@@ -21,8 +37,15 @@ def config() -> argparse.Namespace:
     parser.add_argument("--connect-uri")
     parser.add_argument(
         "--log-level",
+        dest="log_level",
         default="INFO",
         choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
+    )
+    parser.add_argument(
+        "--log-config",
+        dest="log_config",
+        default="/usr/src/app/socketdock/config/logging-config.yml",
+        help="Specifies a custom logging configuration file",
     )
 
     return parser.parse_args()
@@ -46,7 +69,7 @@ def main():
 
     backend_var.set(backend)
 
-    logging.basicConfig(level=args.log_level)
+    configure_logging(args)
 
     app = Sanic("SocketDock")
     app.config.WEBSOCKET_MAX_SIZE = 2**22

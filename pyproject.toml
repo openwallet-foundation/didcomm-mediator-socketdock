@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "socketdock"
-version = "0.1.0a0"
+version = "0.1.1a0"
 description = "Websocket relay service for use with clustered mediators"
 authors = [
 	"Sam Curren <telegramsam@gmail.com>",
@@ -14,6 +14,7 @@ readme = "README.md"
 python = "^3.8.1"
 aiohttp = "^3.9.4"
 sanic = "^22.12.0"
+pyyaml = "^6.0.2"
 
 [tool.poetry.group.dev.dependencies]
 websocket = "^0.2.1"
