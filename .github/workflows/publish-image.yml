@@ -61,7 +61,7 @@ jobs:
             type=raw,value=${{ inputs.tag || github.event.release.tag_name }}
 
       - name: Build and Push Image to ghcr.io
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           push: true
           context: .
